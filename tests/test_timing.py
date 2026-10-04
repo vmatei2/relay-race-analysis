@@ -120,7 +120,9 @@ def test_changed_assets_get_new_urls_so_browsers_cannot_reuse_old_defaults(
         report_module.build_report(race, laps, analysis, directory)
         page = BeautifulSoup((directory / "index.html").read_text(), "html.parser")
         urls = (
-            page.select("script[src]")[-1]["src"],
+            next(
+                tag["src"] for tag in page.select("script[src]") if tag["src"].startswith("report")
+            ),
             page.select_one("link[rel=stylesheet]")["href"],
         )
         for url in urls:
@@ -135,3 +137,66 @@ def test_changed_assets_get_new_urls_so_browsers_cannot_reuse_old_defaults(
     second_urls = build_urls(tmp_path / "second")
     assert first_urls[0] != second_urls[0], "Changed lap defaults must request a fresh script"
     assert first_urls[1] != second_urls[1], "Changed styling must request a fresh stylesheet"
+
+
+def test_replay_positions_handovers_cutoff_and_finish(race, laps):
+    import json
+    import shutil
+    import subprocess
+
+    node = shutil.which("node")
+    if node is None:
+        pytest.skip("Node is needed to exercise the browser's replay timing functions")
+    script = ROOT / "src/relay_race_analysis/assets/replay.js"
+    checks = r"""
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const {positionAt, snapshotAt} = require(process.argv[1]);
+const report = JSON.parse(fs.readFileSync(0, 'utf8'));
+const rows = report.laps;
+for (const side of ['own', 'rival']) {
+  const laps = rows.map(row => row[side]);
+  assert.equal(positionAt(laps, -10).progress, 0);
+  for (let i = 0; i < laps.length; i++) {
+    const lap = laps[i];
+    const start = lap.elapsed_seconds - lap.duration_seconds;
+    const midway = positionAt(laps, start + lap.duration_seconds / 2);
+    assert.equal(midway.runner, lap.runner);
+    assert.equal(midway.lap, i + 1);
+    assert.equal(midway.progress, i + 0.5);
+    const finish = positionAt(laps, lap.elapsed_seconds);
+    assert.equal(finish.completed, i + 1);
+    assert.equal(finish.progress, i + 1);
+    if (i + 1 < laps.length) assert.equal(finish.runner, laps[i + 1].runner);
+  }
+  assert.equal(positionAt(laps, 999999).progress, laps.length);
+}
+assert.equal(snapshotAt(rows, 0).split, null);
+assert.equal(snapshotAt(rows, rows[0].own.elapsed_seconds).split, null);
+const close = snapshotAt(rows, rows[7].rival.elapsed_seconds);
+assert.equal(close.split.number, 8);
+assert.equal(close.split.lead, 5);
+const cutoff = snapshotAt(rows, 14400);
+for (const side of ['own', 'rival']) {
+  assert.equal(cutoff[side].completed, 28);
+  assert.equal(cutoff[side].lap, 29);
+  assert.equal(cutoff[side].finished, false);
+}
+const firstFinish = snapshotAt(rows, report.teams[0].finish_seconds);
+assert.equal(firstFinish.own.finished, true);
+assert.equal(firstFinish.rival.finished, false);
+assert.equal(firstFinish.split.number, 28);
+const final = snapshotAt(rows, report.teams[1].finish_seconds);
+assert.equal(final.own.finished, true);
+assert.equal(final.rival.finished, true);
+assert.equal(final.split.lead, 73);
+console.log('Replay timing checks passed at every lap midpoint and finish.');
+"""
+    result = subprocess.run(
+        [node, "-e", checks, str(script)],
+        input=json.dumps(compare(race, laps)),
+        text=True,
+        capture_output=True,
+        timeout=10,
+    )
+    assert result.returncode == 0, result.stdout + result.stderr

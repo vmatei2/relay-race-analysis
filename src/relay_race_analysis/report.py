@@ -251,7 +251,7 @@ def build_report(race: Race, laps: list[Lap], report: dict, output: Path) -> Non
     (exports / "analysis.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     (output / "plotly.min.js").write_text(get_plotlyjs(), encoding="utf-8")
     asset_urls = {}
-    for filename in ("report.css", "report.js"):
+    for filename in ("report.css", "report.js", "replay.js"):
         content = (ASSETS / filename).read_bytes()
         path = Path(filename)
         versioned_name = f"{path.stem}.{sha256(content).hexdigest()[:12]}{path.suffix}"

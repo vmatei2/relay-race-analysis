@@ -9,12 +9,13 @@
   <link rel="stylesheet" href="{{ asset_urls['report.css'] }}">
   <script defer src="plotly.min.js"></script>
   <script defer src="{{ asset_urls['report.js'] }}"></script>
+  <script defer src="{{ asset_urls['replay.js'] }}"></script>
 </head>
 <body>
   <a class="skip-link" href="#race-story">Skip to race analysis</a>
   <header class="topbar wrap">
     <a class="brand" href="#top"><span class="brand-icon" aria-hidden="true">↗</span> THE RELAY REPORT</a>
-    <nav aria-label="Report sections"><a href="#race-story">Race story</a><a href="#lap-by-lap">Laps</a><a href="#runners">Runners</a><a href="#data">Data</a></nav>
+    <nav aria-label="Report sections"><a href="#replay">Replay</a><a href="#race-story">Race story</a><a href="#lap-by-lap">Laps</a><a href="#runners">Runners</a><a href="#data">Data</a></nav>
   </header>
   <main id="top" class="wrap">
     <section class="hero" aria-labelledby="hero-title">
@@ -22,7 +23,7 @@
         <p class="eyebrow"><span class="live-dot"></span> ENDURE RELAYS · LONDON · 03 OCT 2026</p>
         <h1 id="hero-title">73 seconds<br><span>ahead.</span></h1>
         <p class="intro">Tracklife London vs Run for Will-Being.<br>Both teams ran 29 laps of 2.5 km.</p>
-        <div class="hero-actions"><a class="button primary" href="#race-story">See the lap times <span aria-hidden="true">↓</span></a><a class="text-link" href="downloads/head-to-head.csv" download>Download lap data ↗</a></div>
+        <div class="hero-actions"><a class="button primary" href="#replay">Watch the race <span aria-hidden="true">↓</span></a><a class="text-link" href="downloads/head-to-head.csv" download>Download lap data ↗</a></div>
       </div>
       <aside class="result-card" aria-label="Final team results">
         <div class="result-heading"><span>THE FINAL RESULT</span><span>29 × 2.5 KM</span></div>
@@ -44,6 +45,37 @@
       <div><span class="metric-label">BIGGEST LEAD</span><strong>{{ report.peak.lead }}<small>s</small></strong><p>after lap {{ report.peak.number }}</p></div>
       <div><span class="metric-label">CLOSEST MOMENT</span><strong>5<small>s</small></strong><p>after laps 1 and 8</p></div>
       <div><span class="metric-label">LAPS GAINING TIME</span><strong>{{ report.gains }}<small>/ {{ report.count }}</small></strong><p>{{ report.losses }} losing · {{ report.ties }} even</p></div>
+    </section>
+
+    <section id="replay" class="report-section" aria-labelledby="replay-title">
+      <div class="section-heading"><div><p class="eyebrow">RACE REPLAY</p><h2 id="replay-title">Watch the race unfold</h2></div><span class="section-note">Four hours, in two minutes</span></div>
+      <p class="section-intro">Follow both teams from the start to lap 29. The runner names change at each handover; the lead updates when both teams finish the same lap.</p>
+      <div class="replay-card">
+        <div class="replay-top"><div><span class="replay-label">RACE CLOCK</span><strong id="replay-clock">0:00:00</strong></div><span id="replay-status" class="replay-status">Ready to start</span></div>
+        <div class="replay-body">
+          <div class="replay-course">
+            <svg viewBox="0 0 700 400" role="img" aria-label="Illustrative course showing each team's estimated position within its current lap" class="replay-track">
+              <defs><pattern id="finish-checks" width="12" height="12" patternUnits="userSpaceOnUse"><rect width="12" height="12" fill="#edf2e6"/><path d="M0 0h6v6H0zM6 6h6v6H6z" fill="#536b5e"/></pattern></defs>
+              <path id="replay-course-path" d="M350 330 H180 A130 130 0 0 1 180 70 H520 A130 130 0 0 1 520 330 H350" fill="none" stroke="#335b49" stroke-width="60"/>
+              <path d="M350 330 H180 A130 130 0 0 1 180 70 H520 A130 130 0 0 1 520 330 H350" fill="none" stroke="#779786" stroke-width="1.5" stroke-dasharray="5 8"/>
+              <rect x="344" y="300" width="12" height="60" fill="url(#finish-checks)"/>
+              <text x="350" y="389" text-anchor="middle" class="replay-line-label">START / HANDOVER</text>
+              <g id="replay-dot-own" class="replay-dot"><circle r="18" fill="#d9edb1" stroke="#173a2d" stroke-width="3"/><text text-anchor="middle" dominant-baseline="central">TL</text></g>
+              <g id="replay-dot-rival" class="replay-dot"><circle r="18" fill="#afbef5" stroke="#203362" stroke-width="3"/><text text-anchor="middle" dominant-baseline="central">WB</text></g>
+            </svg>
+            <div class="replay-gap"><span id="replay-leader">Together at the start</span><strong id="replay-gap-value">0s</strong><small id="replay-gap-split">No completed laps yet</small></div>
+          </div>
+          <div class="replay-scoreboard">
+            <article class="replay-team own"><h3><span class="replay-team-dot"></span>Tracklife London <small>TL</small></h3><strong id="replay-runner-own">Omar Mansour</strong><p id="replay-lap-own">Starting lap 1 of 29</p><div class="replay-distance"><span id="replay-distance-own">0.0 km</span><small>estimated distance</small></div><div class="replay-progress"><span id="replay-progress-own"></span></div></article>
+            <article class="replay-team rival"><h3><span class="replay-team-dot"></span>Run for Will-Being <small>WB</small></h3><strong id="replay-runner-rival">Kazuya Saito</strong><p id="replay-lap-rival">Starting lap 1 of 29</p><div class="replay-distance"><span id="replay-distance-rival">0.0 km</span><small>estimated distance</small></div><div class="replay-progress"><span id="replay-progress-rival"></span></div></article>
+          </div>
+        </div>
+        <div class="replay-story" aria-live="off"><span id="replay-story-time">THE START</span><p id="replay-story-text">Omar and Kazuya take the opening lap.</p></div>
+        <div class="replay-controls"><button id="replay-play" class="button primary">Play race <span aria-hidden="true">▶</span></button><button id="replay-reset" class="replay-reset">Restart</button><label for="replay-speed">Playback length <select id="replay-speed"><option value="60">1 minute</option><option value="120" selected>2 minutes</option><option value="240">4 minutes</option></select></label></div>
+        <div class="replay-timeline"><label class="sr-only" for="replay-slider">Replay race time in seconds</label><input id="replay-slider" type="range" min="0" max="{{ report.teams[-1].finish_seconds }}" value="0" step="1"><div class="replay-timeline-labels"><span>Start · 0:00:00</span><span>Finish · {{ report.teams[-1].finish }}</span></div></div>
+        <div class="replay-jumps" aria-label="Jump to a race moment"><button data-replay-lap="8">Lap 8 · 5s gap</button><button data-replay-lap="23">Lap 23 · 97s gap</button><button id="replay-cutoff">Four-hour mark</button><button id="replay-finish">The finish</button></div>
+      </div>
+      <p class="replay-note">The dots assume a steady speed within each lap, so their positions and distances are estimates. The lap finishes and split gaps use the recorded times. This drawing isn’t a map of the course; both teams cover the same distance per circuit, and the offset dots let you see them when they’re close.</p>
     </section>
 
     <section id="race-story" class="report-section">
@@ -99,7 +131,7 @@
   <footer class="wrap"><span>THE RELAY REPORT</span><p>{{ race.title }} · 3 October 2026</p><a href="#top">Back to top ↑</a></footer>
   <script id="report-data" type="application/json">{{ report|tojson }}</script>
   <script id="report-figures" type="application/json">{{ figures|tojson }}</script>
-  <script id="race-config" type="application/json">{{ {'lap_distance_km': race.lap_distance_km}|tojson }}</script>
+  <script id="race-config" type="application/json">{{ {'lap_distance_km': race.lap_distance_km, 'cutoff_seconds': race.cutoff_seconds}|tojson }}</script>
   <noscript><div class="noscript-note">Turn on JavaScript to use the charts and lap selector. You can still read the lap table and download the CSV files below.</div></noscript>
 </body>
 </html>
