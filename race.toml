@@ -1,0 +1,22 @@
+title = "Endure Relays London"
+date = "2026-10-03"
+lap_distance_km = 2.5
+cutoff_seconds = 14400
+opening_lap_same_distance = true
+results_url = "https://mytime.kronosports.uk/results.aspx?CId=20177&RId=758&EId=1"
+
+[[teams]]
+id = "tracklife"
+name = "Tracklife London"
+short_name = "Tracklife"
+bib = 145
+color = "#21614e"
+url = "https://mytime.kronosports.uk/myresults.aspx?uid=20177-758-1-502028"
+
+[[teams]]
+id = "willbeing"
+name = "Run for Will-Being"
+short_name = "Will-Being"
+bib = 131
+color = "#4763b4"
+url = "https://mytime.kronosports.uk/myresults.aspx?uid=20177-758-1-502014"

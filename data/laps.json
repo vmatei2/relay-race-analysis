@@ -1,0 +1,582 @@
+[
+  {
+    "team_id": "tracklife",
+    "number": 1,
+    "runner": "Omar Mansour",
+    "runner_slot": "D",
+    "elapsed_seconds": 462,
+    "duration_seconds": 462,
+    "reported_seconds": null,
+    "clock_time": "10:07:44"
+  },
+  {
+    "team_id": "tracklife",
+    "number": 2,
+    "runner": "Vlad Matei",
+    "runner_slot": "B",
+    "elapsed_seconds": 952,
+    "duration_seconds": 490,
+    "reported_seconds": 489,
+    "clock_time": "10:15:53"
+  },
+  {
+    "team_id": "tracklife",
+    "number": 3,
+    "runner": "Greg Constable",
+    "runner_slot": "C",
+    "elapsed_seconds": 1452,
+    "duration_seconds": 500,
+    "reported_seconds": 500,
+    "clock_time": "10:24:13"
+  },
+  {
+    "team_id": "tracklife",
+    "number": 4,
+    "runner": "James Ingham",
+    "runner_slot": "A",
+    "elapsed_seconds": 1962,
+    "duration_seconds": 510,
+    "reported_seconds": 509,
+    "clock_time": "10:32:43"
+  },
+  {
+    "team_id": "tracklife",
+    "number": 5,
+    "runner": "Omar Mansour",
+    "runner_slot": "D",
+    "elapsed_seconds": 2452,
+    "duration_seconds": 490,
+    "reported_seconds": 490,
+    "clock_time": "10:40:53"
+  },
+  {
+    "team_id": "tracklife",
+    "number": 6,
+    "runner": "Vlad Matei",
+    "runner_slot": "B",
+    "elapsed_seconds": 2940,
+    "duration_seconds": 488,
+    "reported_seconds": 488,
+    "clock_time": "10:49:02"
+  },
+  {
+    "team_id": "tracklife",
+    "number": 7,
+    "runner": "Greg Constable",
+    "runner_slot": "C",
+    "elapsed_seconds": 3441,
+    "duration_seconds": 501,
+    "reported_seconds": 501,
+    "clock_time": "10:57:23"
+  },
+  {
+    "team_id": "tracklife",
+    "number": 8,
+    "runner": "James Ingham",
+    "runner_slot": "A",
+    "elapsed_seconds": 3983,
+    "duration_seconds": 542,
+    "reported_seconds": 541,
+    "clock_time": "11:06:24"
+  },
+  {
+    "team_id": "tracklife",
+    "number": 9,
+    "runner": "Omar Mansour",
+    "runner_slot": "D",
+    "elapsed_seconds": 4479,
+    "duration_seconds": 496,
+    "reported_seconds": 496,
+    "clock_time": "11:14:40"
+  },
+  {
+    "team_id": "tracklife",
+    "number": 10,
+    "runner": "Vlad Matei",
+    "runner_slot": "B",
+    "elapsed_seconds": 4973,
+    "duration_seconds": 494,
+    "reported_seconds": 493,
+    "clock_time": "11:22:54"
+  },
+  {
+    "team_id": "tracklife",
+    "number": 11,
+    "runner": "Greg Constable",
+    "runner_slot": "C",
+    "elapsed_seconds": 5479,
+    "duration_seconds": 506,
+    "reported_seconds": 506,
+    "clock_time": "11:31:20"
+  },
+  {
+    "team_id": "tracklife",
+    "number": 12,
+    "runner": "James Ingham",
+    "runner_slot": "A",
+    "elapsed_seconds": 5992,
+    "duration_seconds": 513,
+    "reported_seconds": 512,
+    "clock_time": "11:39:53"
+  },
+  {
+    "team_id": "tracklife",
+    "number": 13,
+    "runner": "Omar Mansour",
+    "runner_slot": "D",
+    "elapsed_seconds": 6479,
+    "duration_seconds": 487,
+    "reported_seconds": 486,
+    "clock_time": "11:48:00"
+  },
+  {
+    "team_id": "tracklife",
+    "number": 14,
+    "runner": "Vlad Matei",
+    "runner_slot": "B",
+    "elapsed_seconds": 6970,
+    "duration_seconds": 491,
+    "reported_seconds": 491,
+    "clock_time": "11:56:11"
+  },
+  {
+    "team_id": "tracklife",
+    "number": 15,
+    "runner": "Greg Constable",
+    "runner_slot": "C",
+    "elapsed_seconds": 7471,
+    "duration_seconds": 501,
+    "reported_seconds": 501,
+    "clock_time": "12:04:33"
+  },
+  {
+    "team_id": "tracklife",
+    "number": 16,
+    "runner": "James Ingham",
+    "runner_slot": "A",
+    "elapsed_seconds": 8001,
+    "duration_seconds": 530,
+    "reported_seconds": 529,
+    "clock_time": "12:13:22"
+  },
+  {
+    "team_id": "tracklife",
+    "number": 17,
+    "runner": "Omar Mansour",
+    "runner_slot": "D",
+    "elapsed_seconds": 8502,
+    "duration_seconds": 501,
+    "reported_seconds": 500,
+    "clock_time": "12:21:43"
+  },
+  {
+    "team_id": "tracklife",
+    "number": 18,
+    "runner": "Vlad Matei",
+    "runner_slot": "B",
+    "elapsed_seconds": 8999,
+    "duration_seconds": 497,
+    "reported_seconds": 497,
+    "clock_time": "12:30:00"
+  },
+  {
+    "team_id": "tracklife",
+    "number": 19,
+    "runner": "Greg Constable",
+    "runner_slot": "C",
+    "elapsed_seconds": 9507,
+    "duration_seconds": 508,
+    "reported_seconds": 508,
+    "clock_time": "12:38:29"
+  },
+  {
+    "team_id": "tracklife",
+    "number": 20,
+    "runner": "James Ingham",
+    "runner_slot": "A",
+    "elapsed_seconds": 10040,
+    "duration_seconds": 533,
+    "reported_seconds": 532,
+    "clock_time": "12:47:21"
+  },
+  {
+    "team_id": "tracklife",
+    "number": 21,
+    "runner": "Omar Mansour",
+    "runner_slot": "D",
+    "elapsed_seconds": 10546,
+    "duration_seconds": 506,
+    "reported_seconds": 506,
+    "clock_time": "12:55:47"
+  },
+  {
+    "team_id": "tracklife",
+    "number": 22,
+    "runner": "Vlad Matei",
+    "runner_slot": "B",
+    "elapsed_seconds": 11042,
+    "duration_seconds": 496,
+    "reported_seconds": 495,
+    "clock_time": "13:04:03"
+  },
+  {
+    "team_id": "tracklife",
+    "number": 23,
+    "runner": "Greg Constable",
+    "runner_slot": "C",
+    "elapsed_seconds": 11554,
+    "duration_seconds": 512,
+    "reported_seconds": 512,
+    "clock_time": "13:12:36"
+  },
+  {
+    "team_id": "tracklife",
+    "number": 24,
+    "runner": "James Ingham",
+    "runner_slot": "A",
+    "elapsed_seconds": 12098,
+    "duration_seconds": 544,
+    "reported_seconds": 543,
+    "clock_time": "13:21:39"
+  },
+  {
+    "team_id": "tracklife",
+    "number": 25,
+    "runner": "Omar Mansour",
+    "runner_slot": "D",
+    "elapsed_seconds": 12615,
+    "duration_seconds": 517,
+    "reported_seconds": 516,
+    "clock_time": "13:30:16"
+  },
+  {
+    "team_id": "tracklife",
+    "number": 26,
+    "runner": "Vlad Matei",
+    "runner_slot": "B",
+    "elapsed_seconds": 13113,
+    "duration_seconds": 498,
+    "reported_seconds": 498,
+    "clock_time": "13:38:34"
+  },
+  {
+    "team_id": "tracklife",
+    "number": 27,
+    "runner": "Greg Constable",
+    "runner_slot": "C",
+    "elapsed_seconds": 13640,
+    "duration_seconds": 527,
+    "reported_seconds": 526,
+    "clock_time": "13:47:21"
+  },
+  {
+    "team_id": "tracklife",
+    "number": 28,
+    "runner": "James Ingham",
+    "runner_slot": "A",
+    "elapsed_seconds": 14185,
+    "duration_seconds": 545,
+    "reported_seconds": 545,
+    "clock_time": "13:56:26"
+  },
+  {
+    "team_id": "tracklife",
+    "number": 29,
+    "runner": "Omar Mansour",
+    "runner_slot": "D",
+    "elapsed_seconds": 14691,
+    "duration_seconds": 506,
+    "reported_seconds": 505,
+    "clock_time": "14:04:52"
+  },
+  {
+    "team_id": "willbeing",
+    "number": 1,
+    "runner": "Kazuya Saito",
+    "runner_slot": "A",
+    "elapsed_seconds": 467,
+    "duration_seconds": 467,
+    "reported_seconds": null,
+    "clock_time": "10:07:48"
+  },
+  {
+    "team_id": "willbeing",
+    "number": 2,
+    "runner": "Alexander Carr",
+    "runner_slot": "B",
+    "elapsed_seconds": 965,
+    "duration_seconds": 498,
+    "reported_seconds": 497,
+    "clock_time": "10:16:06"
+  },
+  {
+    "team_id": "willbeing",
+    "number": 3,
+    "runner": "Will Davis",
+    "runner_slot": "D",
+    "elapsed_seconds": 1478,
+    "duration_seconds": 513,
+    "reported_seconds": 512,
+    "clock_time": "10:24:39"
+  },
+  {
+    "team_id": "willbeing",
+    "number": 4,
+    "runner": "Kazuya Saito",
+    "runner_slot": "A",
+    "elapsed_seconds": 1977,
+    "duration_seconds": 499,
+    "reported_seconds": 499,
+    "clock_time": "10:32:58"
+  },
+  {
+    "team_id": "willbeing",
+    "number": 5,
+    "runner": "Alexander Carr",
+    "runner_slot": "B",
+    "elapsed_seconds": 2477,
+    "duration_seconds": 500,
+    "reported_seconds": 500,
+    "clock_time": "10:41:18"
+  },
+  {
+    "team_id": "willbeing",
+    "number": 6,
+    "runner": "Shuichi Koyama",
+    "runner_slot": "C",
+    "elapsed_seconds": 2983,
+    "duration_seconds": 506,
+    "reported_seconds": 505,
+    "clock_time": "10:49:44"
+  },
+  {
+    "team_id": "willbeing",
+    "number": 7,
+    "runner": "Kazuya Saito",
+    "runner_slot": "A",
+    "elapsed_seconds": 3486,
+    "duration_seconds": 503,
+    "reported_seconds": 503,
+    "clock_time": "10:58:08"
+  },
+  {
+    "team_id": "willbeing",
+    "number": 8,
+    "runner": "Alexander Carr",
+    "runner_slot": "B",
+    "elapsed_seconds": 3988,
+    "duration_seconds": 502,
+    "reported_seconds": 501,
+    "clock_time": "11:06:29"
+  },
+  {
+    "team_id": "willbeing",
+    "number": 9,
+    "runner": "Will Davis",
+    "runner_slot": "D",
+    "elapsed_seconds": 4495,
+    "duration_seconds": 507,
+    "reported_seconds": 507,
+    "clock_time": "11:14:57"
+  },
+  {
+    "team_id": "willbeing",
+    "number": 10,
+    "runner": "Kazuya Saito",
+    "runner_slot": "A",
+    "elapsed_seconds": 4998,
+    "duration_seconds": 503,
+    "reported_seconds": 503,
+    "clock_time": "11:23:20"
+  },
+  {
+    "team_id": "willbeing",
+    "number": 11,
+    "runner": "Alexander Carr",
+    "runner_slot": "B",
+    "elapsed_seconds": 5505,
+    "duration_seconds": 507,
+    "reported_seconds": 506,
+    "clock_time": "11:31:46"
+  },
+  {
+    "team_id": "willbeing",
+    "number": 12,
+    "runner": "Shuichi Koyama",
+    "runner_slot": "C",
+    "elapsed_seconds": 6016,
+    "duration_seconds": 511,
+    "reported_seconds": 510,
+    "clock_time": "11:40:17"
+  },
+  {
+    "team_id": "willbeing",
+    "number": 13,
+    "runner": "Kazuya Saito",
+    "runner_slot": "A",
+    "elapsed_seconds": 6522,
+    "duration_seconds": 506,
+    "reported_seconds": 505,
+    "clock_time": "11:48:43"
+  },
+  {
+    "team_id": "willbeing",
+    "number": 14,
+    "runner": "Alexander Carr",
+    "runner_slot": "B",
+    "elapsed_seconds": 7028,
+    "duration_seconds": 506,
+    "reported_seconds": 506,
+    "clock_time": "11:57:09"
+  },
+  {
+    "team_id": "willbeing",
+    "number": 15,
+    "runner": "Will Davis",
+    "runner_slot": "D",
+    "elapsed_seconds": 7539,
+    "duration_seconds": 511,
+    "reported_seconds": 510,
+    "clock_time": "12:05:40"
+  },
+  {
+    "team_id": "willbeing",
+    "number": 16,
+    "runner": "Shuichi Koyama",
+    "runner_slot": "C",
+    "elapsed_seconds": 8059,
+    "duration_seconds": 520,
+    "reported_seconds": 519,
+    "clock_time": "12:14:20"
+  },
+  {
+    "team_id": "willbeing",
+    "number": 17,
+    "runner": "Kazuya Saito",
+    "runner_slot": "A",
+    "elapsed_seconds": 8569,
+    "duration_seconds": 510,
+    "reported_seconds": 510,
+    "clock_time": "12:22:51"
+  },
+  {
+    "team_id": "willbeing",
+    "number": 18,
+    "runner": "Alexander Carr",
+    "runner_slot": "B",
+    "elapsed_seconds": 9078,
+    "duration_seconds": 509,
+    "reported_seconds": 508,
+    "clock_time": "12:31:19"
+  },
+  {
+    "team_id": "willbeing",
+    "number": 19,
+    "runner": "Will Davis",
+    "runner_slot": "D",
+    "elapsed_seconds": 9593,
+    "duration_seconds": 515,
+    "reported_seconds": 515,
+    "clock_time": "12:39:54"
+  },
+  {
+    "team_id": "willbeing",
+    "number": 20,
+    "runner": "Shuichi Koyama",
+    "runner_slot": "C",
+    "elapsed_seconds": 10112,
+    "duration_seconds": 519,
+    "reported_seconds": 518,
+    "clock_time": "12:48:33"
+  },
+  {
+    "team_id": "willbeing",
+    "number": 21,
+    "runner": "Kazuya Saito",
+    "runner_slot": "A",
+    "elapsed_seconds": 10628,
+    "duration_seconds": 516,
+    "reported_seconds": 516,
+    "clock_time": "12:57:09"
+  },
+  {
+    "team_id": "willbeing",
+    "number": 22,
+    "runner": "Alexander Carr",
+    "runner_slot": "B",
+    "elapsed_seconds": 11136,
+    "duration_seconds": 508,
+    "reported_seconds": 507,
+    "clock_time": "13:05:37"
+  },
+  {
+    "team_id": "willbeing",
+    "number": 23,
+    "runner": "Will Davis",
+    "runner_slot": "D",
+    "elapsed_seconds": 11651,
+    "duration_seconds": 515,
+    "reported_seconds": 515,
+    "clock_time": "13:14:12"
+  },
+  {
+    "team_id": "willbeing",
+    "number": 24,
+    "runner": "Shuichi Koyama",
+    "runner_slot": "C",
+    "elapsed_seconds": 12170,
+    "duration_seconds": 519,
+    "reported_seconds": 519,
+    "clock_time": "13:22:51"
+  },
+  {
+    "team_id": "willbeing",
+    "number": 25,
+    "runner": "Kazuya Saito",
+    "runner_slot": "A",
+    "elapsed_seconds": 12693,
+    "duration_seconds": 523,
+    "reported_seconds": 522,
+    "clock_time": "13:31:34"
+  },
+  {
+    "team_id": "willbeing",
+    "number": 26,
+    "runner": "Alexander Carr",
+    "runner_slot": "B",
+    "elapsed_seconds": 13204,
+    "duration_seconds": 511,
+    "reported_seconds": 510,
+    "clock_time": "13:40:05"
+  },
+  {
+    "team_id": "willbeing",
+    "number": 27,
+    "runner": "Will Davis",
+    "runner_slot": "D",
+    "elapsed_seconds": 13724,
+    "duration_seconds": 520,
+    "reported_seconds": 520,
+    "clock_time": "13:48:45"
+  },
+  {
+    "team_id": "willbeing",
+    "number": 28,
+    "runner": "Shuichi Koyama",
+    "runner_slot": "C",
+    "elapsed_seconds": 14240,
+    "duration_seconds": 516,
+    "reported_seconds": 515,
+    "clock_time": "13:57:21"
+  },
+  {
+    "team_id": "willbeing",
+    "number": 29,
+    "runner": "Kazuya Saito",
+    "runner_slot": "A",
+    "elapsed_seconds": 14764,
+    "duration_seconds": 524,
+    "reported_seconds": 524,
+    "clock_time": "14:06:06"
+  }
+]

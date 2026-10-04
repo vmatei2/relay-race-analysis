@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Tracklife London vs Run for Will-Being: the lap-by-lap story of a 73-second win at Endure Relays London.">
+  <meta name="theme-color" content="#f6f5ed">
+  <title>Tracklife × Will-Being · The race, lap by lap</title>
+  <link rel="stylesheet" href="report.css">
+  <script defer src="plotly.min.js"></script>
+  <script defer src="report.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#race-story">Skip to race analysis</a>
+  <header class="topbar wrap">
+    <a class="brand" href="#top"><span class="brand-icon" aria-hidden="true">↗</span> THE RELAY REPORT</a>
+    <nav aria-label="Report sections"><a href="#race-story">Race story</a><a href="#lap-by-lap">Laps</a><a href="#runners">Runners</a><a href="#data">Data</a></nav>
+  </header>
+  <main id="top" class="wrap">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="live-dot"></span> ENDURE RELAYS · LONDON · 03 OCT 2026</p>
+        <h1 id="hero-title">29 laps.<br>73 seconds.<br><span>One win.</span></h1>
+        <p class="intro">Tracklife London vs Run for Will-Being.<br>Four hours of racing, told one lap at a time.</p>
+        <div class="hero-actions"><a class="button primary" href="#race-story">Explore the race <span aria-hidden="true">↓</span></a><a class="text-link" href="downloads/head-to-head.csv" download>Download lap data ↗</a></div>
+      </div>
+      <aside class="result-card" aria-label="Final team results">
+        <div class="result-heading"><span>THE FINAL RESULT</span><span>29 × 2.5 KM</span></div>
+        {% for team in report.teams %}
+        <div class="team-result {{ team.id }}">
+          <span class="placing">0{{ loop.index }}</span>
+          <div><p class="team-name">{{ team.name }}</p><span class="team-detail">#{{ team.bib }} · {{ team.laps }} laps · {{ report.distance }} km</span></div>
+          <strong>{{ team.finish }}</strong>
+        </div>
+        {% endfor %}
+        <div class="margin-summary"><span>Winning margin</span><strong>{{ margin_time }} <small>min:sec</small></strong></div>
+        <p class="result-note">Same lap count. Tracklife completed lap 29<br>{{ report.margin }} seconds sooner.</p>
+        <div class="track-art" aria-hidden="true"><span></span><span></span><span></span><span></span><i>145</i></div>
+      </aside>
+    </section>
+
+    <section class="metrics" aria-label="Race highlights">
+      <div><span class="metric-label">FINISH MARGIN</span><strong>+{{ report.margin }}<small>s</small></strong><p>in Tracklife’s favour</p></div>
+      <div><span class="metric-label">BIGGEST LEAD</span><strong>{{ report.peak.lead }}<small>s</small></strong><p>after lap {{ report.peak.number }}</p></div>
+      <div><span class="metric-label">CLOSEST MOMENT</span><strong>5<small>s</small></strong><p>after laps 1 and 8</p></div>
+      <div><span class="metric-label">LAPS GAINING TIME</span><strong>{{ report.gains }}<small>/ {{ report.count }}</small></strong><p>{{ report.losses }} losing · {{ report.ties }} even</p></div>
+    </section>
+
+    <section id="race-story" class="report-section">
+      <div class="section-heading"><div><p class="eyebrow">01 / THE RACE STORY</p><h2>Ahead at every split.</h2></div><span class="section-note">Same lap. Same distance.</span></div>
+      <p class="section-intro">Tracklife arrived first at every recorded lap finish. The margin grew in bursts, shrank at key moments, and reached its peak six laps from home.</p>
+      <div class="chart-card">
+        <div class="chart-heading"><div><h3>How the lead developed</h3><p>Positive = Tracklife reached that lap finish sooner.</p></div><a class="export-button" href="downloads/gap-chart.png" download aria-label="Download lead chart as PNG">Download PNG ↗</a></div>
+        <div id="gap-chart" class="chart" role="img" aria-label="Tracklife's cumulative lead after each lap; five seconds at lap 8, 97 seconds at lap 23, 73 seconds at the finish."></div>
+        <p class="chart-footnote">The gap compares each team at the same completed distance. It is not an estimate of their physical separation at the same instant.</p>
+      </div>
+      <div class="story-cards">
+        <article><span class="story-number">01</span><p class="eyebrow">LAPS 1–8 · THE EARLY SCARE</p><h3>{{ report.laps[6].lead }} seconds became five.</h3><p>Tracklife built a {{ report.laps[6].lead }}-second cushion by lap 7. On lap 8, James’s {{ report.laps[7].own.duration_seconds|time }} against Alexander’s {{ report.laps[7].rival.duration_seconds|time }} cost {{ -report.laps[7].gain }} seconds, bringing the teams almost level on cumulative time.</p></article>
+        <article><span class="story-number">02</span><p class="eyebrow">LAPS 9–23 · BUILDING THE GAP</p><h3>A 92-second rebuild.</h3><p>From the lap-8 low, Tracklife gained a net 92 seconds over the next 15 laps. The biggest single gain was on lap {{ report.biggest_gain.number }}: +{{ report.biggest_gain.gain }} seconds, with {{ report.biggest_gain.own.runner.split()[0] }} running {{ report.biggest_gain.own.duration_seconds|time }}.</p></article>
+        <article><span class="story-number">03</span><p class="eyebrow">LAPS 24–29 · BRINGING IT HOME</p><h3>55 seconds. Then the finish.</h3><p>Will-Being recovered 42 seconds between laps 23 and 28. Omar’s final {{ report.laps[-1].own.duration_seconds|time }} added 18 seconds back, sealing the {{ margin_time }} margin.</p></article>
+      </div>
+    </section>
+
+    <section id="lap-by-lap" class="report-section">
+      <div class="section-heading"><div><p class="eyebrow">02 / LAP BY LAP</p><h2>Where the seconds moved.</h2></div></div>
+      <div class="lap-inspector" aria-labelledby="inspector-heading">
+        <div class="inspector-top"><h3 id="inspector-heading">Explore a lap</h3><div class="lap-controls"><button id="previous-lap" aria-label="Previous lap">←</button><strong id="lap-label">LAP 08 / 29</strong><button id="next-lap" aria-label="Next lap">→</button></div></div>
+        <label class="sr-only" for="lap-slider">Select race lap</label><input id="lap-slider" type="range" min="1" max="{{ report.count }}" value="8">
+        <div id="lap-detail" class="lap-detail" aria-live="polite" aria-atomic="true"></div>
+        <p class="inspector-hint">Move the slider or click a point in any race chart.</p>
+      </div>
+      <div class="chart-card">
+        <div class="chart-heading"><div><h3>Time gained or lost on each lap</h3><p><span class="legend-dot own"></span> Above zero: Tracklife gains <span class="legend-dot loss"></span> Below zero: Will-Being gains</p></div><a class="export-button" href="downloads/gain-chart.png" download>Download PNG ↗</a></div>
+        <div id="gain-chart" class="chart" role="img" aria-label="Seconds gained or lost by Tracklife on each lap."></div>
+        <p class="chart-footnote">All {{ report.count }} bars add up to +{{ report.margin }} seconds. These are team-lap comparisons; the runner matchups change.</p>
+      </div>
+      <div class="chart-card">
+        <div class="chart-heading"><div><h3>Two teams, {{ report.count }} lap times</h3><p>Both opening laps covered the full 2.5 km route.</p></div><div class="chart-actions"><fieldset class="segmented"><legend class="sr-only">Chart units</legend><label><input type="radio" name="pace-unit" value="time" checked><span>Lap time</span></label><label><input type="radio" name="pace-unit" value="pace"><span>Pace / km</span></label></fieldset><a class="export-button" href="downloads/pace-chart.png" download>Download PNG ↗</a></div></div>
+        <div id="pace-chart" class="chart" role="img" aria-label="Both teams' lap durations, with runner names available on hover."></div>
+        <p class="chart-footnote">Lower is faster. The shaded opening lap was a mass start. Click a legend entry to hide a team; double-click to isolate it.</p>
+      </div>
+      <div class="cutoff-card"><div><p class="eyebrow">THE FOUR-HOUR MARK</p><h3>Both teams were already on lap 29.</h3></div><div><p>Tracklife finished lap 28 at <strong>{{ report.teams[0].last_lap_start|time(true) }}</strong>; Will-Being at <strong>{{ report.teams[1].last_lap_start|time(true) }}</strong>. Both had {{ report.teams[0].at_cutoff }} completed laps at 4:00:00, and the official results count their 29th laps, completed afterwards.</p><p class="muted">The report follows the official result. It does not invent a distance estimate partway through the final lap.</p></div></div>
+    </section>
+
+    <section id="runners" class="report-section">
+      <div class="section-heading"><div><p class="eyebrow">03 / THE RUNNERS</p><h2>The efforts behind the result.</h2></div></div>
+      <p class="section-intro">Compare each runner with their own earlier efforts. Tracklife kept a four-person rotation; Will-Being varied theirs, so outing counts and recovery opportunities differ.</p>
+      <div class="runner-charts">{% for team in race.teams %}<div class="chart-card"><div class="chart-heading"><h3>{{ team.name }}</h3><a class="export-button" href="downloads/runners-{{ team.id }}.png" download>PNG ↗</a></div><div id="runners-{{ team.id }}" class="chart" role="img" aria-label="{{ team.name }} runners' lap durations across their outings."></div></div>{% endfor %}</div>
+      <div class="table-card"><div class="table-heading"><h3>Runner pacing summary</h3><label class="checkbox-label"><input id="exclude-opening" type="checkbox"> Exclude mass-start lap from stats</label></div><div class="table-scroll"><table><caption class="sr-only">Runner lap count, average pace, best time, consistency and first-to-last change</caption><thead><tr><th scope="col">Runner</th><th scope="col">Team</th><th scope="col">Laps</th><th scope="col">Avg lap</th><th scope="col">Avg / km</th><th scope="col">Best lap</th><th scope="col">Std dev</th><th scope="col">Last − first</th></tr></thead><tbody id="runner-table"></tbody></table></div><p class="chart-footnote">Standard deviation measures how much lap times vary. Last − first is a descriptive change, not a diagnosis of fatigue. All laps are included by default.</p></div>
+    </section>
+
+    <section id="data" class="report-section">
+      <div class="section-heading"><div><p class="eyebrow">04 / THE TIMING RECORD</p><h2>Every lap, in the open.</h2></div><a class="text-link" href="downloads/head-to-head.csv" download>Download comparison CSV ↗</a></div>
+      <div class="table-card"><div class="table-scroll"><table class="lap-table"><caption class="sr-only">All 29 laps with both runners, durations, time gained or lost and cumulative lead</caption><thead><tr><th scope="col">Lap</th><th scope="col">Tracklife runner</th><th scope="col">Time</th><th scope="col">Will-Being runner</th><th scope="col">Time</th><th scope="col">Gain / loss</th><th scope="col">Lead</th></tr></thead><tbody>{% for lap in report.laps %}<tr data-lap="{{ lap.number }}"><th scope="row"><button class="lap-table-button" data-select-lap="{{ lap.number }}" aria-label="Explore lap {{ lap.number }}">{{ '%02d'|format(lap.number) }}</button></th><td>{{ lap.own.runner }}</td><td class="numeric">{{ lap.own.duration_seconds|time }}</td><td>{{ lap.rival.runner }}</td><td class="numeric">{{ lap.rival.duration_seconds|time }}</td><td class="numeric {{ 'positive' if lap.gain >= 0 else 'negative' }}">{{ '%+d'|format(lap.gain) }}s</td><td class="numeric">{{ lap.lead }}s</td></tr>{% endfor %}</tbody></table></div></div>
+      <details class="methodology"><summary>Sources, timing precision & interpretation</summary><div><p>The {{ report.count * 2 }} completed splits come from <a href="{{ race.teams[0].url }}" target="_blank" rel="noopener">Tracklife’s results</a> and <a href="{{ race.teams[1].url }}" target="_blank" rel="noopener">Will-Being’s results</a>. Empty “Lap 30” rows are excluded. Runner attribution is supplied by the timing provider.</p><p>For exact reconciliation, lap durations are differences between published cumulative times. The separately displayed “Leg Time” can differ by one second ({{ report.rounding_rows }} rows in this dataset). Both fields are preserved in <a href="downloads/laps.csv" download>the full lap CSV</a>. The primary charts and narrative consistently use cumulative-derived durations.</p><p>Pace assumes {{ race.lap_distance_km }} km per lap; the team confirmed the opening lap followed the same route and distance. No within-lap splits, GPS, heart rate or separate handover measurements are available. Slower laps may have several causes; the data shows timing changes, not their cause.</p><p>PNG downloads show the complete charts in lap-time units.</p><p>A cumulative gap compares finish timestamps at equal distances. It cannot establish who was physically ahead between timing points. Opening and closing efforts can involve different racing contexts.</p><p><a href="{{ race.results_url }}" target="_blank" rel="noopener">Official overall results ↗</a> · <a href="downloads/analysis.json" download>Download analysis JSON ↗</a></p></div></details>
+    </section>
+  </main>
+  <footer class="wrap"><span>THE RELAY REPORT</span><p>{{ race.title }} · 3 October 2026 · First edition</p><a href="#top">Back to top ↑</a></footer>
+  <script id="report-data" type="application/json">{{ report|tojson }}</script>
+  <script id="report-figures" type="application/json">{{ figures|tojson }}</script>
+  <script id="race-config" type="application/json">{{ {'lap_distance_km': race.lap_distance_km}|tojson }}</script>
+  <noscript><div class="noscript-note">JavaScript enables the charts and lap explorer. The complete lap table and CSV downloads remain available below.</div></noscript>
+</body>
+</html>
