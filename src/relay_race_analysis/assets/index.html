@@ -48,7 +48,7 @@
     </section>
 
     <section id="replay" class="report-section" aria-labelledby="replay-title">
-      <div class="section-heading"><div><p class="eyebrow">RACE REPLAY</p><h2 id="replay-title">Watch the race unfold</h2></div><span class="section-note">Four hours, in two minutes</span></div>
+      <div class="section-heading"><div><p class="eyebrow">RACE REPLAY</p><h2 id="replay-title">Watch the race unfold</h2></div><span class="section-note">Four hours, in one minute</span></div>
       <p class="section-intro">Follow both teams from the start to lap 29. The runner names change at each handover; the lead updates when both teams finish the same lap.</p>
       <div class="replay-card">
         <div class="replay-top"><div><span class="replay-label">RACE CLOCK</span><strong id="replay-clock">0:00:00</strong></div><span id="replay-status" class="replay-status">Ready to start</span></div>
@@ -71,7 +71,7 @@
           </div>
         </div>
         <div class="replay-story" aria-live="off"><span id="replay-story-time">THE START</span><p id="replay-story-text">Omar and Kazuya take the opening lap.</p></div>
-        <div class="replay-controls"><button id="replay-play" class="button primary">Play race <span aria-hidden="true">▶</span></button><button id="replay-reset" class="replay-reset">Restart</button><label for="replay-speed">Playback length <select id="replay-speed"><option value="60">1 minute</option><option value="120" selected>2 minutes</option><option value="240">4 minutes</option></select></label></div>
+        <div class="replay-controls"><button id="replay-play" class="button primary">Play race <span aria-hidden="true">▶</span></button><button id="replay-reset" class="replay-reset">Restart</button><label for="replay-speed">Playback length <select id="replay-speed"><option value="30">30 seconds</option><option value="60" selected>1 minute</option></select></label></div>
         <div class="replay-timeline"><label class="sr-only" for="replay-slider">Replay race time in seconds</label><input id="replay-slider" type="range" min="0" max="{{ report.teams[-1].finish_seconds }}" value="0" step="1"><div class="replay-timeline-labels"><span>Start · 0:00:00</span><span>Finish · {{ report.teams[-1].finish }}</span></div></div>
         <div class="replay-jumps" aria-label="Jump to a race moment"><button data-replay-lap="8">Lap 8 · 5s gap</button><button data-replay-lap="23">Lap 23 · 97s gap</button><button id="replay-finish">The finish</button></div>
       </div>
