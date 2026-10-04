@@ -47,12 +47,11 @@
   el("slider").max = end;
   const moments = [
     {at: 0, label: "THE START", text: "Omar and Kazuya take the opening lap."},
-    ...[1, 7, 8, 13, 23, 28].filter(lap => lap <= report.count).map(number => {
+    ...[1, 7, 13, 23, 28].filter(lap => lap <= report.count).map(number => {
       const row = report.laps[number - 1];
       const lines = {
         1: `Omar runs 7:42; Kazuya runs 7:47. Tracklife starts with a ${row.lead}s lead.`,
         7: `Greg finishes lap 7. Tracklife’s lead reaches ${row.lead}s.`,
-        8: `James runs 9:02 and Alexander runs 8:22. The gap falls to ${row.lead}s.`,
         13: `Omar’s 8:07 gains 19 seconds, the largest gain on a single lap.`,
         23: `Tracklife’s lead reaches ${row.lead}s, the largest gap at a recorded split.`,
         28: `Both teams start the final lap. Tracklife’s lead is ${row.lead}s.`

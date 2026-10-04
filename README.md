@@ -49,9 +49,9 @@ This first-edition report and its editorial narrative are specific to this race 
 - Runner averages, pacing consistency and first-to-last changes, using all laps.
 - Downloadable lap CSV, head-to-head CSV and analysis JSON.
 
-The race story: Tracklife was ahead at each completed lap; the lead fell from 45 seconds
-after lap 7 to five seconds after lap 8, peaked at 97 seconds after lap 23, fell to 55 seconds
-after lap 28, then finished at 73 seconds. Tracklife gained time on 21 of the 29 laps.
+The race story highlights Tracklife leading at every completed lap, gaining time on 21
+of the 29 laps, reaching a 97-second lead after lap 23 and winning by 73 seconds.
+Omar’s lap 13 gained 19 seconds; his final lap added another 18 seconds to the lead.
 
 The lead chart’s PNG download shows the complete race, independently of browser zoom
 or lap selection. Replay movement assumes steady speed within each recorded lap; the

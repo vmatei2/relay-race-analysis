@@ -76,7 +76,6 @@ def figures(race: Race, report: dict) -> dict:
         )
     )
     for lap_number, label in (
-        (8, "5s ahead at lap 8"),
         (report["peak"]["number"], f"Largest lead: {report['peak']['lead']}s"),
         (report["count"], f"Finish: {report['margin']}s"),
     ):

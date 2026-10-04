@@ -43,8 +43,8 @@
     <section class="metrics" aria-label="Race highlights">
       <div><span class="metric-label">FINISH MARGIN</span><strong>+{{ report.margin }}<small>s</small></strong><p>in Tracklife’s favour</p></div>
       <div><span class="metric-label">BIGGEST LEAD</span><strong>{{ report.peak.lead }}<small>s</small></strong><p>after lap {{ report.peak.number }}</p></div>
-      <div><span class="metric-label">CLOSEST MOMENT</span><strong>5<small>s</small></strong><p>after laps 1 and 8</p></div>
-      <div><span class="metric-label">LAPS GAINING TIME</span><strong>{{ report.gains }}<small>/ {{ report.count }}</small></strong><p>{{ report.losses }} losing · {{ report.ties }} even</p></div>
+      <div><span class="metric-label">BIGGEST LAP GAIN</span><strong>+{{ report.biggest_gain.gain }}<small>s</small></strong><p>Omar · lap {{ report.biggest_gain.number }}</p></div>
+      <div><span class="metric-label">LAPS GAINING TIME</span><strong>{{ report.gains }}<small>/ {{ report.count }}</small></strong><p>laps quicker than Will-Being</p></div>
     </section>
 
     <section id="replay" class="report-section" aria-labelledby="replay-title">
@@ -73,24 +73,23 @@
         <div class="replay-story" aria-live="off"><span id="replay-story-time">THE START</span><p id="replay-story-text">Omar and Kazuya take the opening lap.</p></div>
         <div class="replay-controls"><button id="replay-play" class="button primary">Play race <span aria-hidden="true">▶</span></button><button id="replay-reset" class="replay-reset">Restart</button><label for="replay-speed">Playback length <select id="replay-speed"><option value="30">30 seconds</option><option value="60" selected>1 minute</option></select></label></div>
         <div class="replay-timeline"><label class="sr-only" for="replay-slider">Replay race time in seconds</label><input id="replay-slider" type="range" min="0" max="{{ report.teams[-1].finish_seconds }}" value="0" step="1"><div class="replay-timeline-labels"><span>Start · 0:00:00</span><span>Finish · {{ report.teams[-1].finish }}</span></div></div>
-        <div class="replay-jumps" aria-label="Jump to a race moment"><button data-replay-lap="8">Lap 8 · 5s gap</button><button data-replay-lap="23">Lap 23 · 97s gap</button><button id="replay-finish">The finish</button></div>
+        <div class="replay-jumps" aria-label="Jump to a race moment"><button data-replay-lap="13">Lap 13 · 19s gained</button><button data-replay-lap="23">Lap 23 · 97s gap</button><button id="replay-finish">The finish</button></div>
       </div>
       <p class="replay-note">The dots assume a steady speed within each lap, so their positions and distances are estimates. The lap finishes and split gaps use the recorded times. This drawing isn’t a map of the course; both teams cover the same distance per circuit, and the offset dots let you see them when they’re close.</p>
     </section>
 
     <section id="race-story" class="report-section">
       <div class="section-heading"><div><p class="eyebrow">01 / RACE STORY</p><h2>How the lead changed</h2></div><span class="section-note">Comparing the same completed lap</span></div>
-      <p class="section-intro">Tracklife finished every lap before Will-Being. The lead dropped to five seconds after lap 8, then grew to 97 seconds after lap 23.</p>
+      <p class="section-intro">Tracklife led at every completed lap and finished {{ report.margin }} seconds ahead. The team gained time on {{ report.gains }} of {{ report.count }} laps, with its largest lead reaching {{ report.peak.lead }} seconds after lap {{ report.peak.number }}.</p>
       <div class="chart-card">
         <div class="chart-heading"><div><h3>Lead after each lap</h3><p>A point at 45s means Tracklife finished that lap 45 seconds before Will-Being.</p></div><a class="export-button" href="downloads/gap-chart.png" download aria-label="Download lead chart as PNG">Download PNG ↗</a></div>
-        <div id="gap-chart" class="chart" role="img" aria-label="Tracklife's cumulative lead after each lap; five seconds at lap 8, 97 seconds at lap 23, 73 seconds at the finish."></div>
+        <div id="gap-chart" class="chart" role="img" aria-label="Tracklife's lead after each lap; ahead at every completed lap, with a 97-second peak and a 73-second winning margin."></div>
         <p class="chart-footnote">The gap uses each team’s finish time for the same lap. It tells you how long after Tracklife the other team reached that timing point.</p>
       </div>
       <div class="story-cards">
-        <article><span class="story-number">01</span><p class="eyebrow">LAPS 1–7</p><h3>{{ report.laps[6].lead }} seconds ahead</h3><p>Tracklife’s lead grew from five seconds after Omar’s opening lap to {{ report.laps[6].lead }} seconds after Greg finished lap 7.</p></article>
-        <article><span class="story-number">02</span><p class="eyebrow">LAP 8</p><h3>The gap dropped to five seconds</h3><p>James ran {{ report.laps[7].own.duration_seconds|time }} and Alexander ran {{ report.laps[7].rival.duration_seconds|time }}. That reduced Tracklife’s lead by {{ -report.laps[7].gain }} seconds.</p></article>
-        <article><span class="story-number">03</span><p class="eyebrow">LAPS 9–23</p><h3>Largest lead: {{ report.peak.lead }} seconds</h3><p>Over the next 15 laps, Tracklife added 92 seconds to the lead. Omar’s {{ report.biggest_gain.own.duration_seconds|time }} on lap {{ report.biggest_gain.number }} gained {{ report.biggest_gain.gain }} seconds, the largest gain on a single lap.</p></article>
-        <article><span class="story-number">04</span><p class="eyebrow">LAPS 24–29</p><h3>{{ report.margin }} seconds at the finish</h3><p>Will-Being reduced the gap to 55 seconds by lap 28, before Omar’s final {{ report.laps[-1].own.duration_seconds|time }} added 18 seconds to Tracklife’s lead.</p></article>
+        <article><span class="story-number">01</span><p class="eyebrow">LAPS 1–7</p><h3>{{ report.laps[6].lead }} seconds ahead</h3><p>Omar gave Tracklife the lead on the opening lap, and Greg finished lap 7 with the team {{ report.laps[6].lead }} seconds ahead.</p></article>
+        <article><span class="story-number">02</span><p class="eyebrow">LAP {{ report.peak.number }}</p><h3>Largest lead: {{ report.peak.lead }} seconds</h3><p>Tracklife reached its largest lead after lap {{ report.peak.number }}. Omar’s {{ report.biggest_gain.own.duration_seconds|time }} on lap {{ report.biggest_gain.number }} gained {{ report.biggest_gain.gain }} seconds, the biggest gain on a single lap.</p></article>
+        <article><span class="story-number">03</span><p class="eyebrow">THE FINISH</p><h3>{{ report.margin }} seconds ahead</h3><p>Omar’s final {{ report.laps[-1].own.duration_seconds|time }} added {{ report.laps[-1].gain }} seconds to the lead. Tracklife finished {{ report.count }} laps and {{ report.distance }} km with a {{ report.margin }}-second winning margin.</p></article>
       </div>
     </section>
 
