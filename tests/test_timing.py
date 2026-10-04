@@ -100,3 +100,38 @@ def test_sign_convention_reverses_when_team_order_reverses(race, laps):
     assert report["margin"] == -73
     assert report["laps"][7]["gain"] == 40
     assert not report["ahead_every_split"]
+
+
+def test_changed_assets_get_new_urls_so_browsers_cannot_reuse_old_defaults(
+    race, laps, tmp_path, monkeypatch
+):
+    import shutil
+
+    import relay_race_analysis.report as report_module
+
+    assets = tmp_path / "assets"
+    shutil.copytree(report_module.ASSETS, assets)
+    monkeypatch.setattr(report_module, "ASSETS", assets)
+    # PNG rendering is unrelated to the browser's script and stylesheet cache.
+    monkeypatch.setattr(report_module.pio, "write_images", lambda **kwargs: None)
+    analysis = compare(race, laps)
+
+    def build_urls(directory):
+        report_module.build_report(race, laps, analysis, directory)
+        page = BeautifulSoup((directory / "index.html").read_text(), "html.parser")
+        urls = (
+            page.select("script[src]")[-1]["src"],
+            page.select_one("link[rel=stylesheet]")["href"],
+        )
+        for url in urls:
+            assert (directory / url).is_file()
+        return urls
+
+    first_urls = build_urls(tmp_path / "first")
+    script = assets / "report.js"
+    script.write_text(script.read_text().replace("let activeLap = 1;", "let activeLap = 8;"))
+    stylesheet = assets / "report.css"
+    stylesheet.write_text(stylesheet.read_text() + "\n/* Changed release */\n")
+    second_urls = build_urls(tmp_path / "second")
+    assert first_urls[0] != second_urls[0], "Changed lap defaults must request a fresh script"
+    assert first_urls[1] != second_urls[1], "Changed styling must request a fresh stylesheet"

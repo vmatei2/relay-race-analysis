@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import csv
 import json
-import shutil
 from dataclasses import asdict
+from hashlib import sha256
 from pathlib import Path
 
 import plotly.graph_objects as go
@@ -250,8 +250,13 @@ def build_report(race: Race, laps: list[Lap], report: dict, output: Path) -> Non
             )
     (exports / "analysis.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     (output / "plotly.min.js").write_text(get_plotlyjs(), encoding="utf-8")
+    asset_urls = {}
     for filename in ("report.css", "report.js"):
-        shutil.copyfile(ASSETS / filename, output / filename)
+        content = (ASSETS / filename).read_bytes()
+        path = Path(filename)
+        versioned_name = f"{path.stem}.{sha256(content).hexdigest()[:12]}{path.suffix}"
+        (output / versioned_name).write_bytes(content)
+        asset_urls[filename] = versioned_name
     environment = Environment(
         loader=FileSystemLoader(ASSETS), autoescape=select_autoescape(["html"])
     )
@@ -317,6 +322,7 @@ def build_report(race: Race, laps: list[Lap], report: dict, output: Path) -> Non
         race=race,
         report=report,
         figures=chart_specs,
+        asset_urls=asset_urls,
         margin_time=format_time(abs(report["margin"])),
     )
     (output / "index.html").write_text(page, encoding="utf-8")
