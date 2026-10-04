@@ -65,8 +65,8 @@
     <section id="lap-by-lap" class="report-section">
       <div class="section-heading"><div><p class="eyebrow">02 / LAP BY LAP</p><h2>Compare the laps</h2></div></div>
       <div class="lap-inspector" aria-labelledby="inspector-heading">
-        <div class="inspector-top"><h3 id="inspector-heading">Choose a lap</h3><div class="lap-controls"><button id="previous-lap" aria-label="Previous lap">←</button><strong id="lap-label">LAP 08 / 29</strong><button id="next-lap" aria-label="Next lap">→</button></div></div>
-        <label class="sr-only" for="lap-slider">Select race lap</label><input id="lap-slider" type="range" min="1" max="{{ report.count }}" value="8">
+        <div class="inspector-top"><h3 id="inspector-heading">Choose a lap</h3><div class="lap-controls"><button id="previous-lap" aria-label="Previous lap">←</button><strong id="lap-label">LAP 01 / {{ report.count }}</strong><button id="next-lap" aria-label="Next lap">→</button></div></div>
+        <label class="sr-only" for="lap-slider">Select race lap</label><input id="lap-slider" type="range" min="1" max="{{ report.count }}" value="1">
         <div id="lap-detail" class="lap-detail" aria-live="polite" aria-atomic="true"></div>
         <p class="inspector-hint">Move the slider or tap a point on a chart to see who ran that lap and how much the gap changed.</p>
       </div>

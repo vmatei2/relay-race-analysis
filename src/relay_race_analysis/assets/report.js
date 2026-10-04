@@ -7,7 +7,7 @@ const raceCharts = ["gap-chart", "gain-chart", "pace-chart"];
 const chartConfig = {responsive: true, displaylogo: false, scrollZoom: false,
   modeBarButtonsToRemove: ["select2d", "lasso2d", "toImage"],
   toImageButtonOptions: {format: "png", width: 1400, height: 700, scale: 2}};
-let activeLap = 8;
+let activeLap = 1;
 
 function time(seconds) {
   const value = Math.round(seconds);
