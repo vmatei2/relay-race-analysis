@@ -43,21 +43,19 @@ This first-edition report and its editorial narrative are specific to this race 
 
 ## What the report shows
 
+- An animated race replay with playback controls, runner handovers and recorded split gaps.
 - Cumulative lead at the same completed lap: how the 73-second margin developed.
-- Per-lap gains/losses that reconcile exactly to the finish margin.
-- Side-by-side lap times with a pace toggle, runner hover details and PNG downloads.
-- A lap explorer linked to the race charts and the complete timing table.
-- Individual runner outings, pacing consistency and first-to-last changes.
-- An optional exclusion of mass-start laps from runner summary statistics.
-- The four-hour cutoff and officially counted final laps.
+- A lap explorer linked to the lead chart and the complete timing table.
+- Runner averages, pacing consistency and first-to-last changes, using all laps.
 - Downloadable lap CSV, head-to-head CSV and analysis JSON.
 
 The race story: Tracklife was ahead at each completed lap; the lead fell from 45 seconds
 after lap 7 to five seconds after lap 8, peaked at 97 seconds after lap 23, fell to 55 seconds
 after lap 28, then finished at 73 seconds. Tracklife gained time on 21 of the 29 laps.
 
-PNG downloads are generated during the build and show the complete charts in lap-time
-units, independently of current browser zoom, lap selection or the pace toggle.
+The lead chart’s PNG download shows the complete race, independently of browser zoom
+or lap selection. Replay movement assumes steady speed within each recorded lap; the
+positions and distances between lap finishes are estimates.
 
 ## Timing conventions
 
@@ -106,8 +104,8 @@ uv run ruff format --check src tests
 
 Tests cover source attribution, incomplete/missing laps, timing inconsistencies,
 the 73-second reconciliation, the pivotal lap-8 loss, the cutoff, differing runner outing
-counts and the comparison's sign convention. Browser verification checks chart rendering,
-lap selection, unit switching, opening-lap exclusion, export and mobile layout.
+counts and the comparison's sign convention. Browser verification checks the replay, chart rendering, lap selection, runner statistics
+and mobile layout. The replay timing test uses Node when available.
 
 ## Files
 

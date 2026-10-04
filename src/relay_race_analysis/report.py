@@ -47,7 +47,7 @@ def base_figure(y_title: str, height: int = 340) -> go.Figure:
 def figures(race: Race, report: dict) -> dict:
     rows = report["laps"]
     numbers = [row["number"] for row in rows]
-    own, rival = race.teams
+    own = race.teams[0]
     gap = base_figure("Tracklife lead (seconds)", 380)
     gap.update_layout(showlegend=False)
     gap.add_trace(
@@ -99,120 +99,7 @@ def figures(race: Race, report: dict) -> dict:
         ],
         ticksuffix="s",
     )
-    gain = base_figure("Tracklife gain / loss (s)")
-    gain.add_trace(
-        go.Bar(
-            x=numbers,
-            y=[row["gain"] for row in rows],
-            name="Change in lead",
-            marker_color=[own.color if row["gain"] >= 0 else "#b55b3e" for row in rows],
-            customdata=[
-                [
-                    row["number"],
-                    row["own"]["runner"],
-                    row["rival"]["runner"],
-                    format_time(row["own"]["duration_seconds"]),
-                    format_time(row["rival"]["duration_seconds"]),
-                ]
-                for row in rows
-            ],
-            hovertemplate=(
-                "Lap %{x}<br>Tracklife gain / loss: %{y:+d}s"
-                "<br>%{customdata[1]}: %{customdata[3]}"
-                "<br>%{customdata[2]}: %{customdata[4]}<extra></extra>"
-            ),
-        )
-    )
-    gain.update_layout(showlegend=False, bargap=0.25)
-    gain.update_yaxes(ticksuffix="s")
-    pace = base_figure("Lap time (min:sec)", 380)
-    for team, key in ((own, "own"), (rival, "rival")):
-        pace.add_trace(
-            go.Scatter(
-                x=numbers,
-                y=[row[key]["duration_seconds"] for row in rows],
-                name=team.name,
-                mode="lines+markers",
-                line={"color": team.color, "width": 2.5},
-                marker={"size": 7, "symbol": "circle" if key == "own" else "diamond"},
-                customdata=[
-                    [
-                        row["number"],
-                        row[key]["runner"],
-                        format_time(row[key]["duration_seconds"]),
-                        format_time(row[key]["duration_seconds"] / race.lap_distance_km),
-                    ]
-                    for row in rows
-                ],
-                hovertemplate=(
-                    "%{customdata[1]}<br>Lap time: %{customdata[2]}"
-                    "<br>Pace: %{customdata[3]}/km<extra>%{fullData.name}</extra>"
-                ),
-            )
-        )
-    ticks = list(range(450, 556, 15))
-    pace.update_yaxes(
-        tickvals=ticks, ticktext=[format_time(value) for value in ticks], range=[450, 555]
-    )
-    pace.update_layout(
-        shapes=[
-            {
-                "type": "rect",
-                "xref": "x",
-                "yref": "paper",
-                "x0": 0.5,
-                "x1": 1.5,
-                "y0": 0,
-                "y1": 1,
-                "fillcolor": "#e8e0ce",
-                "opacity": 0.45,
-                "line": {"width": 0},
-                "layer": "below",
-            }
-        ]
-    )
-    result = {"gap-chart": gap, "gain-chart": gain, "pace-chart": pace}
-    palettes = (
-        ("#21614e", "#448b83", "#89673c", "#344b5e"),
-        ("#4763b4", "#8671a8", "#3c8b9b", "#9b6a81"),
-    )
-    for team, palette in zip(race.teams, palettes, strict=True):
-        figure = base_figure("Lap time (min:sec)", 320)
-        maximum_outings = max(
-            len(runner["outings"]) for runner in report["runners"] if runner["team_id"] == team.id
-        )
-        figure.update_xaxes(
-            title="Runner’s lap number", dtick=1, range=[0.7, maximum_outings + 0.3]
-        )
-        figure.update_yaxes(
-            tickvals=ticks, ticktext=[format_time(value) for value in ticks], range=[450, 555]
-        )
-        for runner, color in zip(
-            [runner for runner in report["runners"] if runner["team_id"] == team.id],
-            palette,
-            strict=False,
-        ):
-            outings = runner["outings"]
-            figure.add_trace(
-                go.Scatter(
-                    x=list(range(1, len(outings) + 1)),
-                    y=[lap["duration_seconds"] for lap in outings],
-                    mode="lines+markers",
-                    name=runner["name"].split()[0],
-                    line={"color": color, "width": 2},
-                    marker={"size": 7},
-                    customdata=[
-                        [lap["number"], runner["name"], format_time(lap["duration_seconds"])]
-                        for lap in outings
-                    ],
-                    hovertemplate=(
-                        "%{customdata[1]}<br>Race lap %{customdata[0]}"
-                        "<br>Lap time: %{customdata[2]}<extra></extra>"
-                    ),
-                )
-            )
-        result[f"runners-{team.id}"] = figure
-    return {key: json.loads(figure.to_json()) for key, figure in result.items()}
+    return {"gap-chart": json.loads(gap.to_json())}
 
 
 def build_report(race: Race, laps: list[Lap], report: dict, output: Path) -> None:
@@ -263,13 +150,7 @@ def build_report(race: Race, laps: list[Lap], report: dict, output: Path) -> Non
     environment.filters["time"] = format_time
     template = environment.get_template("index.html")
     chart_specs = figures(race, report)
-    export_titles = {
-        "gap-chart": "Tracklife’s lead over Run for Will-Being",
-        "gain-chart": "Time Tracklife gained or lost on each lap",
-        "pace-chart": "Lap times · Tracklife London vs Run for Will-Being",
-        "runners-tracklife": "Tracklife London · Each runner’s lap times",
-        "runners-willbeing": "Run for Will-Being · Each runner’s lap times",
-    }
+    export_titles = {"gap-chart": "Tracklife’s lead over Run for Will-Being"}
     export_figures = []
     export_caption = " · ".join(
         [race.title, race.date, "Official finish-line timings", f"{race.lap_distance_km} km / lap"]
@@ -289,17 +170,6 @@ def build_report(race: Race, laps: list[Lap], report: dict, output: Path) -> Non
             plot_bgcolor="#fffef9",
             margin={"l": 85, "r": 40, "t": 140, "b": 100},
         )
-        if chart_id == "gain-chart":
-            image.add_annotation(
-                text="Above zero: Tracklife gains time; below zero: Will-Being gains time.",
-                xref="paper",
-                yref="paper",
-                x=0,
-                y=1.11,
-                showarrow=False,
-                xanchor="left",
-                font={"size": 14},
-            )
         image.add_annotation(
             text=export_caption,
             xref="paper",

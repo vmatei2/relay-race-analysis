@@ -60,7 +60,6 @@
       return {at: Math.max(row.own.elapsed_seconds, row.rival.elapsed_seconds),
         label: `LAP ${String(number).padStart(2, "0")}`, text: lines[number]};
     }),
-    {at: config.cutoff_seconds, label: "FOUR HOURS", text: "Both teams have completed 28 laps and are running lap 29. The results count this final lap too."},
     {at: ownFinish, label: "TRACKLIFE FINISH", text: `Omar finishes lap 29 at ${clock(ownFinish)}. Will-Being is still on the course.`},
     {at: rivalFinish, label: "BOTH TEAMS FINISHED", text: `Will-Being finishes at ${clock(rivalFinish)}. Both teams cover ${report.distance} km; Tracklife wins by ${report.margin} seconds.`}
   ].sort((a, b) => a.at - b.at);
@@ -139,7 +138,6 @@
     const row = report.laps[Number(button.dataset.replayLap) - 1];
     seek(Math.max(row.own.elapsed_seconds, row.rival.elapsed_seconds));
   }));
-  el("cutoff").addEventListener("click", () => seek(config.cutoff_seconds));
   el("finish").addEventListener("click", () => seek(end));
   document.addEventListener("visibilitychange", () => {
     // Hidden tabs pause rather than jumping forward when you return.

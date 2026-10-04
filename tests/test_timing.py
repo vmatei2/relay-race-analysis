@@ -8,7 +8,6 @@ from bs4 import BeautifulSoup
 
 from relay_race_analysis.analysis import compare
 from relay_race_analysis.data import load_race, parse_laps
-from relay_race_analysis.report import figures
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -63,8 +62,6 @@ def test_cutoff_and_unequal_runner_rotations(race, laps):
     omar = report["runners"][0]
     assert omar["regular"]["count"] == 7
     assert omar["regular"]["best"] == 487
-    chart = figures(race, report)["runners-willbeing"]
-    assert chart["layout"]["xaxis"]["range"][1] > 9
 
 
 def test_missing_lap_is_rejected(race):

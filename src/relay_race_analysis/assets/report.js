@@ -3,7 +3,7 @@
 const report = JSON.parse(document.getElementById("report-data").textContent);
 const figures = JSON.parse(document.getElementById("report-figures").textContent);
 const raceConfig = JSON.parse(document.getElementById("race-config").textContent);
-const raceCharts = ["gap-chart", "gain-chart", "pace-chart"];
+const raceCharts = ["gap-chart"];
 const chartConfig = {responsive: true, displaylogo: false, scrollZoom: false,
   modeBarButtonsToRemove: ["select2d", "lasso2d", "toImage"],
   toImageButtonOptions: {format: "png", width: 1400, height: 700, scale: 2}};
@@ -49,9 +49,8 @@ function selectLap(number) {
     element.classList.toggle("selected", Number(element.dataset.lap) === activeLap));
 }
 function renderRunnerTable() {
-  const statsKey = document.getElementById("exclude-opening").checked ? "regular" : "all";
   document.getElementById("runner-table").innerHTML = report.runners.map(runner => {
-    const stats = runner[statsKey];
+    const stats = runner.all;
     const own = runner.team_id === report.teams[0].id;
     return `<tr><th scope="row">${escapeHTML(runner.name)}</th>
       <td><span class="team-pill ${own ? "" : "rival"}">${own ? "Tracklife" : "Will-Being"}</span></td>
@@ -63,17 +62,6 @@ function renderRunnerTable() {
       <td class="numeric">${stats.change === null ? "—" :
         stats.change === 0 ? "No change" : `${Math.abs(stats.change)}s ${stats.change > 0 ? "slower" : "faster"}`}</td></tr>`;
   }).join("");
-}
-function changePaceUnits(unit) {
-  const divisor = unit === "pace" ? raceConfig.lap_distance_km : 1;
-  const values = figures["pace-chart"].data.map(trace => trace.y.map(value => value / divisor));
-  const minimum = 450 / divisor;
-  const maximum = 555 / divisor;
-  const ticks = [];
-  for (let value = minimum; value <= maximum; value += unit === "pace" ? 5 : 15) ticks.push(value);
-  Plotly.restyle("pace-chart", {y: values});
-  Plotly.relayout("pace-chart", {"yaxis.title.text": unit === "pace" ? "Pace (min:sec / km)" : "Lap time (min:sec)",
-    "yaxis.tickvals": ticks, "yaxis.ticktext": ticks.map(time), "yaxis.range": [minimum, maximum]});
 }
 async function initialise() {
   await Promise.all(Object.entries(figures).map(([id, figure]) => {
@@ -94,9 +82,6 @@ async function initialise() {
       selectLap(button.dataset.selectLap);
       document.querySelector(".lap-inspector").scrollIntoView({block: "center", behavior: "smooth"});
     }));
-  document.querySelectorAll('input[name="pace-unit"]').forEach(input =>
-    input.addEventListener("change", event => changePaceUnits(event.target.value)));
-  document.getElementById("exclude-opening").addEventListener("change", renderRunnerTable);
   renderRunnerTable();
   selectLap(activeLap);
   document.documentElement.dataset.reportReady = "true";
