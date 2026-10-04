@@ -15,8 +15,13 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: read
     steps:
       - uses: actions/checkout@v5
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
       - uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
         with:
           enable-cache: true
@@ -26,7 +31,7 @@ jobs:
       - name: Install Chrome for PNG generation
         run: uv run --frozen plotly_get_chrome -y
       - run: uv run --frozen relay-race-analysis build
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v4
         with:
           path: site
   deploy:
