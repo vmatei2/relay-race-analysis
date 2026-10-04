@@ -26,7 +26,7 @@ function selectLap(number) {
     `LAP ${String(activeLap).padStart(2, "0")} / ${report.count}`;
   document.getElementById("previous-lap").disabled = activeLap === 1;
   document.getElementById("next-lap").disabled = activeLap === report.count;
-  const outcome = row.gain > 0 ? "Tracklife gained" : row.gain < 0 ? "Tracklife lost" : "Even lap";
+  const outcome = row.gain > 0 ? "Tracklife gained" : row.gain < 0 ? "Tracklife lost" : "Same lap time";
   document.getElementById("lap-detail").innerHTML = `
     <div><p class="detail-label">Tracklife London</p>
       <p class="detail-name">${escapeHTML(row.own.runner)}</p>
@@ -60,19 +60,20 @@ function renderRunnerTable() {
       <td class="numeric">${stats.average === null ? "—" : time(stats.average / raceConfig.lap_distance_km)}</td>
       <td class="numeric">${stats.best === null ? "—" : time(stats.best)}</td>
       <td class="numeric">${stats.sd === null ? "—" : stats.sd.toFixed(1) + "s"}</td>
-      <td class="numeric">${stats.change === null ? "—" : signed(stats.change) + "s"}</td></tr>`;
+      <td class="numeric">${stats.change === null ? "—" :
+        stats.change === 0 ? "No change" : `${Math.abs(stats.change)}s ${stats.change > 0 ? "slower" : "faster"}`}</td></tr>`;
   }).join("");
 }
 function changePaceUnits(unit) {
   const divisor = unit === "pace" ? raceConfig.lap_distance_km : 1;
   const values = figures["pace-chart"].data.map(trace => trace.y.map(value => value / divisor));
-  const minimum = Math.floor(Math.min(...values.flat()) / 10) * 10;
-  const maximum = Math.ceil(Math.max(...values.flat()) / 10) * 10;
+  const minimum = 450 / divisor;
+  const maximum = 555 / divisor;
   const ticks = [];
   for (let value = minimum; value <= maximum; value += unit === "pace" ? 5 : 15) ticks.push(value);
   Plotly.restyle("pace-chart", {y: values});
-  Plotly.relayout("pace-chart", {"yaxis.title.text": unit === "pace" ? "Pace · min:sec / km" : "Lap time · min:sec",
-    "yaxis.tickvals": ticks, "yaxis.ticktext": ticks.map(time), "yaxis.autorange": true});
+  Plotly.relayout("pace-chart", {"yaxis.title.text": unit === "pace" ? "Pace (min:sec / km)" : "Lap time (min:sec)",
+    "yaxis.tickvals": ticks, "yaxis.ticktext": ticks.map(time), "yaxis.range": [minimum, maximum]});
 }
 async function initialise() {
   await Promise.all(Object.entries(figures).map(([id, figure]) => {
